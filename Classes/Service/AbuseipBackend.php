@@ -17,8 +17,6 @@ class AbuseipBackend
 
     public function isAbusedIp(string|int $ip): bool
     {
-        $array = $this->getIps();
-
         if (is_string($ip)) {
             $ip = is_numeric($ip) ? (int)$ip : ip2long($ip);
         }
