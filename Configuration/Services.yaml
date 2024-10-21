@@ -1,0 +1,33 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Werkraum\Abuseip\:
+    resource: '../Classes/*'
+
+  cache.abuseip:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
+    arguments: ['abuseip']
+
+  Werkraum\Abuseip\Service\AbuseipBackend:
+    arguments:
+      $cache: '@cache.abuseip'
+      $source: '%abuseip.ip_source%'
+
+  Werkraum\Abuseip\Command\UpdateCommand:
+    tags:
+      - name: console.command
+        command: 'abuseip:update'
+        description: 'Update local abuseip list'
+
+parameters:
+  # https://github.com/borestad/blocklist-abuseipdb
+  # Do not use the abuseipdb-s100-all.ipv4. It is only exposed for statistical usage.
+  # Recommended usage is the maximum 30 days or less to avoid false positives.
+  # 30 Days list
+  # 'https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/main/abuseipdb-s100-30d.ipv4',
+  # 14 Days list
+  abuseip.ip_source: 'https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/main/abuseipdb-s100-14d.ipv4'

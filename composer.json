@@ -1,0 +1,21 @@
+{
+  "name": "werkraum/abuseip",
+  "description": "Middleware to block IP addresses from known sources",
+  "keywords": ["abuseip", "security", "typo3", "extension"],
+  "license": "GPL-2.0-or-later",
+  "type": "typo3-cms-extension",
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "abuseip"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Werkraum\\Abuseip\\": "Classes/"
+    }
+  },
+  "require": {
+    "php": ">=8.1",
+    "typo3/cms-core": "^12.4 || ^13.4"
+  }
+}
